@@ -16,10 +16,11 @@ document
       })
         .then((response) => response.json())
         .then((data) => {
-          const dataList = document.getElementById("dataList");
-          const listItem = document.createElement("li");
-          listItem.textContent = `Name: ${data.name}, Age: ${data.age}`;
-          dataList.appendChild(listItem);
+          const dataTable = document.querySelector("#dataList tbody");
+          const row = document.createElement("tr");
+
+          row.innerHTML = `<td>${data.name}</td><td>${data.age}</td>`;
+          dataTable.appendChild(row);
 
           document.getElementById("name").value = "";
           document.getElementById("age").value = "";
