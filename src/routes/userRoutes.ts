@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUsers } from "../controllers/dataController"; // Pastikan ini sesuai dengan controller Anda
+import { getUsers } from "../controllers/dataController";
 
 const router = Router();
 
