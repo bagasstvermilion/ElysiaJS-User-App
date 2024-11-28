@@ -1,16 +1,23 @@
 import express, { Request, Response } from "express";
-import bodyParser from "body-parser";
+import path from "path";
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "..", "public")));
 
-app.use(express.static("public"));
+app.get("/", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "..", "public", "index.html"));
+});
 
 app.post("/data", (req: Request, res: Response) => {
   const { name, age } = req.body;
-
   res.json({ name, age });
+});
+
+app.delete("/data/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+  res.json({ message: `Data with ID ${id} deleted` });
 });
 
 const PORT = 3000;

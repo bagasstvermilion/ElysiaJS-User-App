@@ -3,6 +3,8 @@ const selectBtn = document.getElementById("selectBtn");
 const deleteBtn = document.getElementById("deleteBtn");
 const dataListBody = document.querySelector("#dataList tbody");
 
+let isSelectMode = false;
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -12,17 +14,19 @@ form.addEventListener("submit", function (event) {
   const newRow = document.createElement("tr");
   newRow.innerHTML = `
     <td class="selectColumn ${
-      selectBtn.textContent === "Select" ? "hidden" : ""
-    }">
-      <input type="checkbox" class="selectCheckbox" ${
-        selectBtn.textContent === "Deselect" ? "" : "disabled"
-      }>
-    </td>
+      isSelectMode ? "" : "hidden"
+    }"><input type="checkbox" class="selectCheckbox" ${
+    isSelectMode ? "" : "disabled"
+  }></td>
     <td>${name}</td>
     <td>${age}</td>
   `;
 
-  dataListBody.prepend(newRow);
+  if (dataListBody.firstChild) {
+    dataListBody.insertBefore(newRow, dataListBody.firstChild);
+  } else {
+    dataListBody.appendChild(newRow);
+  }
 
   form.reset();
 });
@@ -32,16 +36,18 @@ selectBtn.addEventListener("click", function () {
   const selectColumnHeader = document.getElementById("selectColumn");
   const checkboxes = document.querySelectorAll(".selectCheckbox");
 
-  if (selectBtn.textContent === "Select") {
+  isSelectMode = !isSelectMode;
+
+  if (isSelectMode) {
     selectColumn.forEach((column) => column.classList.remove("hidden"));
-    selectColumnHeader.classList.remove("hidden");
     checkboxes.forEach((checkbox) => (checkbox.disabled = false));
+    selectColumnHeader.classList.remove("hidden");
     deleteBtn.disabled = false;
     selectBtn.textContent = "Deselect";
   } else {
     selectColumn.forEach((column) => column.classList.add("hidden"));
-    selectColumnHeader.classList.add("hidden");
     checkboxes.forEach((checkbox) => (checkbox.disabled = true));
+    selectColumnHeader.classList.add("hidden");
     deleteBtn.disabled = true;
     selectBtn.textContent = "Select";
   }
@@ -53,27 +59,15 @@ deleteBtn.addEventListener("click", function () {
     checkbox.closest("tr").remove();
   });
 
-  const remainingRows = document.querySelectorAll("#dataList tbody tr");
-
-  if (remainingRows.length === 0) {
-    deleteBtn.disabled = true;
-  } else {
-    const anySelected =
-      document.querySelectorAll(".selectCheckbox:checked").length > 0;
-    deleteBtn.disabled = !anySelected;
-  }
-
-  const remainingCheckboxes = document.querySelectorAll(".selectCheckbox");
-  if (
-    remainingCheckboxes.length === 0 ||
-    !document.querySelector(".selectCheckbox:checked")
-  ) {
+  if (document.querySelectorAll(".selectCheckbox").length === 0) {
     const selectColumn = document.querySelectorAll(".selectColumn");
     selectColumn.forEach((column) => column.classList.add("hidden"));
 
     const selectColumnHeader = document.getElementById("selectColumn");
     selectColumnHeader.classList.add("hidden");
 
+    deleteBtn.disabled = true;
     selectBtn.textContent = "Select";
+    isSelectMode = false;
   }
 });

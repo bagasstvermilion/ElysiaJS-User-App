@@ -5,32 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Form Submission</title>
     <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <div class="container">
-      <h1>Form Submission</h1>
-      <form id="dataForm">
+      <h2>Form Submission</h2>
+      <form id="form">
         <input type="text" id="name" placeholder="Name" required />
         <input type="number" id="age" placeholder="Age" required />
         <button type="submit">Submit</button>
       </form>
 
-      <h2>Data List</h2>
+      <div class="toolbar">
+        <h3>Data List</h3>
+        <div>
+          <button id="selectBtn">Select</button>
+          <button id="deleteBtn" disabled>Delete</button>
+        </div>
+      </div>
+
       <table id="dataList">
         <thead>
           <tr>
+            <th id="selectColumn" class="hidden">Select</th>
             <th>Name</th>
             <th>Age</th>
           </tr>
         </thead>
-        <tbody>
-        </tbody>
+        <tbody></tbody>
       </table>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
