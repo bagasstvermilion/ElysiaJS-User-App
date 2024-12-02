@@ -1,23 +1,38 @@
-import { Router } from "express";
+import express from "express";
+import { openDb } from "../config/database";
 
-const router = Router();
-let users: { name: string; age: number }[] = [];
+const router = express.Router();
 
-// GET: Retrieve all users
-router.get("/data", (req, res) => {
+router.post("/add-user", async (req, res) => {
+  const { name, age } = req.body;
+  const db = await openDb();
+
+  const result = await db.run("INSERT INTO users (name, age) VALUES (?, ?)", [
+    name,
+    age,
+  ]);
+
+  res.json({
+    message: "User added successfully",
+    id: result.lastID,
+  });
+});
+
+router.get("/users", async (req, res) => {
+  const db = await openDb();
+  const users = await db.all("SELECT * FROM users");
   res.json(users);
 });
 
-// POST: Add new user
-router.post("/data", (req, res) => {
-  const { name, age } = req.body;
-  if (!name || !age) {
-    return res.status(400).json({ error: "Name and age are required" });
-  }
+router.delete("/delete-user/:id", async (req, res) => {
+  const { id } = req.params;
+  const db = await openDb();
 
-  const newUser = { name, age: Number(age) };
-  users.push(newUser);
-  res.json(newUser);
+  await db.run("DELETE FROM users WHERE id = ?", [id]);
+
+  res.json({
+    message: "User deleted successfully",
+  });
 });
 
 export default router;

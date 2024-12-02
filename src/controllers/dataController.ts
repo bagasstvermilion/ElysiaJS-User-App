@@ -1,9 +1,13 @@
-export const getUsers = (req: any, res: any) => {
-  const users = [
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Jane Doe" },
-    { id: 3, name: "Jack Doe" },
-  ];
+import { Request, Response } from "express";
+import { getUsers, deleteUser } from "../services/userService";
 
-  res.json(users);
+export const getUsersController = async (req: Request, res: Response) => {
+  const users = await getUsers();
+  res.status(200).json(users);
+};
+
+export const deleteUserController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  await deleteUser(parseInt(id, 10));
+  res.status(200).json({ message: "User deleted" });
 };
