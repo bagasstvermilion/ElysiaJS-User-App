@@ -3,7 +3,6 @@ import { openDb } from "../config/database";
 
 const router = express.Router();
 
-<<<<<<< HEAD
 router.post("/add-user", async (req, res) => {
   const { name, age } = req.body;
   const db = await openDb();
@@ -28,17 +27,6 @@ router.get("/users", async (req, res) => {
 router.delete("/delete-user/:id", async (req, res) => {
   const { id } = req.params;
   const db = await openDb();
-=======
-router.get("/data", (req, res) => {
-  res.json(users);
-});
-
-router.post("/data", (req, res) => {
-  const { name, age } = req.body;
-  if (!name || !age) {
-    return res.status(400).json({ error: "Name and age are required" });
-  }
->>>>>>> a93d26a11cec12a9cc969ee48ebb9b6ebec8855b
 
   await db.run("DELETE FROM users WHERE id = ?", [id]);
 
