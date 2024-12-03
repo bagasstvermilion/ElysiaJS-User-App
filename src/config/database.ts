@@ -1,5 +1,8 @@
-import sqlite3 from "sqlite3";
+import * as sqlite3 from "sqlite3";
 import { open } from "sqlite";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 let isConnected = false;
 
@@ -25,7 +28,7 @@ export const openDb = async () => {
     }
 
     return await open({
-      filename: "./database.db",
+      filename: process.env.DB_FILENAME || "./database.db",
       driver: sqlite3.Database,
     });
   } catch (error) {

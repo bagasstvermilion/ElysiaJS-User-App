@@ -1,10 +1,15 @@
-import express from "express";
-import bodyParser from "body-parser";
+import express = require("express");
+import bodyParser = require("body-parser");
 import { openDb } from "./config/database";
-import path from "path";
+import * as path from "path";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-const port = 3000;
+const port = process.env.APP_PORT || 3000;
+
+console.log("Loaded environment variables:", process.env);
 
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(bodyParser.json());

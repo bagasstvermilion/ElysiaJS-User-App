@@ -36,14 +36,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = require("express");
-var body_parser_1 = require("body-parser");
+var express = require("express");
+var bodyParser = require("body-parser");
 var database_1 = require("./config/database");
-var path_1 = require("path");
-var app = (0, express_1.default)();
-var port = 3000;
-app.use(express_1.default.static(path_1.default.join(__dirname, "../public")));
-app.use(body_parser_1.default.json());
+var path = require("path");
+var dotenv = require("dotenv");
+dotenv.config();
+var app = express();
+var port = process.env.APP_PORT || 3000;
+console.log("Loaded environment variables:", process.env);
+app.use(express.static(path.join(__dirname, "../public")));
+app.use(bodyParser.json());
 app.get("/users", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var db, rows, error_1;
     return __generator(this, function (_a) {
