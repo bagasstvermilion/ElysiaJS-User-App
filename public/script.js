@@ -1,7 +1,7 @@
 const apiUrl = "http://localhost:3000/users";
 const form = document.querySelector("form");
 const selectBtn = document.getElementById("selectBtn");
-const deleteBtn = document.getElementById("deleteBtn"); 
+const deleteBtn = document.getElementById("deleteBtn");
 
 async function fetchUsers() {
   try {
@@ -71,7 +71,7 @@ form.addEventListener("submit", function (event) {
 
   const name = document.getElementById("name").value;
   const age = document.getElementById("age").value;
-  
+
   addUserToDatabase(name, age);
 
   form.reset();
