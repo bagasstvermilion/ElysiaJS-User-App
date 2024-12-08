@@ -13,7 +13,7 @@ router.post("/add-user", async (req, res) => {
   ]);
 
   res.json({
-    message: "User added successfully",
+    message: "User added successfully!",
     id: result.lastID,
   });
 });
@@ -31,7 +31,7 @@ router.delete("/delete-user/:id", async (req, res) => {
   await db.run("DELETE FROM users WHERE id = ?", [id]);
 
   res.json({
-    message: "User deleted successfully",
+    message: "User deleted successfully!",
   });
 });
 
