@@ -1,5 +1,8 @@
 import express from "express";
 import { openDb } from "../config/database";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const router = express.Router();
 
